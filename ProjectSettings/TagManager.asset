@@ -3,7 +3,31 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - bras
+  - Wrist
+  - RingFinger
+  - Auriculaire
+  - MiddleFinger
+  - Thumb
+  - Index
+  - Auriculaire1
+  - Auriculaire2
+  - Auriculaire3
+  - Auriculaire4
+  - RingFinger1
+  - RingFinger2
+  - RingFinger3
+  - RingFinger4
+  - MiddleFinger1
+  - MiddleFinger2
+  - MiddleFinger3
+  - Index1
+  - Index2
+  - Index3
+  - Thumb1
+  - Thumb2
+  - Thumb3
   layers:
   - Default
   - TransparentFX
