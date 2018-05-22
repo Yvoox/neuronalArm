@@ -34,21 +34,31 @@ public class ManualControl : MonoBehaviour {
         if (Input.GetKey(KeyCode.D))
             wrist.RightWrist();
         if (Input.GetKey(KeyCode.DownArrow)){
-            auriculaire.CloseFinger();
-            ringFinger.CloseFinger();
-            middleFinger.CloseFinger();
-            index.CloseFinger();
-            thumb.CloseFinger();
+            closeHand();
         }
             
         if (Input.GetKey(KeyCode.UpArrow)){
-            auriculaire.OpenFinger();
-            ringFinger.OpenFinger();
-            middleFinger.OpenFinger();
-            index.OpenFinger();
-            thumb.OpenFinger();
+            openHand();
         }
             
         
+    }
+
+    public void closeHand()
+    {
+        auriculaire.CloseFinger();
+        ringFinger.CloseFinger();
+        middleFinger.CloseFinger();
+        index.CloseFinger();
+        thumb.CloseFinger();
+    }
+
+    public void openHand()
+    {
+        auriculaire.OpenFinger();
+        ringFinger.OpenFinger();
+        middleFinger.OpenFinger();
+        index.OpenFinger();
+        thumb.OpenFinger();
     }
 }
