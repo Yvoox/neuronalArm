@@ -29,17 +29,18 @@ public class ThumbControl : MonoBehaviour
 
     public void CloseFinger()
     {
-        if (degree < 55)
+        if (degree < 15)
         {
             Thumb1.transform.Rotate(Vector3.up, Time.deltaTime * 10);
+            Thumb1.transform.Rotate(Vector3.right, Time.deltaTime * 10);
             degree += Time.deltaTime * 10;
         }
-        if (degree >= 55 && degree < 110)
+        if (degree >= 15 && degree < 110)
         {
             Thumb2.transform.Rotate(Vector3.up, Time.deltaTime * 10);
             degree += Time.deltaTime * 10;
         }
-        if (degree >= 110 && degree < 165)
+        if (degree >= 110 && degree < 190)
         {
             Thumb3.transform.Rotate(Vector3.up, Time.deltaTime * 10);
             degree += Time.deltaTime * 10;
@@ -49,12 +50,13 @@ public class ThumbControl : MonoBehaviour
 
     public void OpenFinger()
     {
-        if (degree > 0 && degree <= 55)
+        if (degree > 0 && degree <= 15)
         {
             Thumb1.transform.Rotate(Vector3.down, Time.deltaTime * 10);
+            Thumb1.transform.Rotate(Vector3.left, Time.deltaTime * 10);
             degree -= Time.deltaTime * 10;
         }
-        if (degree > 55 && degree <= 110)
+        if (degree > 15 && degree <= 110)
         {
             Thumb2.transform.Rotate(Vector3.down, Time.deltaTime * 10);
             degree -= Time.deltaTime * 10;

@@ -48,9 +48,20 @@ public class playerCtrl : MonoBehaviour
             /* Vector3 movement = new Vector3(cam.transform.forward.x, cam.transform.forward.y, cam.transform.forward.z);
              rb.AddForce(movement * speed);*/
             controller.closeHand();
+            controller.centerWrist();
 
 
             Debug.Log("Neutral");
+        }
+
+        if (es.MentalCommandGetCurrentAction() == EdkDll.IEE_MentalCommandAction_t.MC_ROTATE_RIGHT)
+        {
+            /* Vector3 movement = new Vector3(cam.transform.forward.x, cam.transform.forward.y, cam.transform.forward.z);
+             rb.AddForce(movement * speed);*/
+            controller.rotateWrist();
+
+
+            Debug.Log("Rotate");
         }
     }
 

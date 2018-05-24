@@ -29,17 +29,18 @@ public class MiddleControl : MonoBehaviour
 
     public void CloseFinger()
     {
-        if (degree < 55)
+        if (degree < 115)
         {
             MiddleFinger1.transform.Rotate(Vector3.up, Time.deltaTime * 10);
+            if(degree < 15) MiddleFinger1.transform.Rotate(Vector3.right, Time.deltaTime * 10);
             degree += Time.deltaTime * 10;
         }
-        if (degree >= 55 && degree < 110)
+        if (degree >= 115 && degree < 175)
         {
             MiddleFinger2.transform.Rotate(Vector3.up, Time.deltaTime * 10);
             degree += Time.deltaTime * 10;
         }
-        if (degree >= 110 && degree < 165)
+        if (degree >= 175 && degree < 220)
         {
             MiddleFinger3.transform.Rotate(Vector3.up, Time.deltaTime * 10);
             degree += Time.deltaTime * 10;
@@ -49,17 +50,18 @@ public class MiddleControl : MonoBehaviour
 
     public void OpenFinger()
     {
-        if (degree > 0 && degree <= 55)
+        if (degree > 0 && degree <= 115)
         {
             MiddleFinger1.transform.Rotate(Vector3.down, Time.deltaTime * 10);
+            if (degree < 15) MiddleFinger1.transform.Rotate(Vector3.left, Time.deltaTime * 10);
             degree -= Time.deltaTime * 10;
         }
-        if (degree > 55 && degree <= 110)
+        if (degree > 115 && degree <= 175)
         {
             MiddleFinger2.transform.Rotate(Vector3.down, Time.deltaTime * 10);
             degree -= Time.deltaTime * 10;
         }
-        if (degree > 110)
+        if (degree > 175)
         {
             MiddleFinger3.transform.Rotate(Vector3.down, Time.deltaTime * 10);
             degree -= Time.deltaTime * 10;

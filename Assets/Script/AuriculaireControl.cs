@@ -29,46 +29,54 @@ public class AuriculaireControl : MonoBehaviour {
     }
 
     public void CloseFinger(){
-        if (degree < 30){
+        if (degree < 15){
             Auriculaire1.transform.Rotate(Vector3.up, Time.deltaTime * 10);
+            if (degree < 5)  Auriculaire1.transform.Rotate(Vector3.right, Time.deltaTime * 10);
             degree += Time.deltaTime * 10;
         }
-        if (degree >= 30 && degree < 75) 
+        if (degree >= 15 && degree < 100) 
         {
             Auriculaire2.transform.Rotate(Vector3.up, Time.deltaTime * 10);
+            if (degree < 20) Auriculaire2.transform.Rotate(Vector3.right, Time.deltaTime * 10);
             degree += Time.deltaTime * 10;
         }
-        if (degree >= 75 && degree < 120)
+        if (degree >= 100 && degree < 160)
         {
             Auriculaire3.transform.Rotate(Vector3.up, Time.deltaTime * 10);
+            if (degree < 80) Auriculaire3.transform.Rotate(Vector3.right, Time.deltaTime * 10);
             degree += Time.deltaTime * 10;
         }
-        if (degree >= 120 && degree < 165)
+        if (degree >= 160 && degree < 220)
         {
             Auriculaire4.transform.Rotate(Vector3.up, Time.deltaTime * 10);
+            if (degree < 125) Auriculaire4.transform.Rotate(Vector3.right, Time.deltaTime * 10);
             degree += Time.deltaTime * 10;
         }
     }
 
     public void OpenFinger(){
-        if (degree >0 && degree <=30)
+        if (degree >0 && degree <= 15)
         {
             Auriculaire1.transform.Rotate(Vector3.down, Time.deltaTime * 10);
+            if (degree < 5) Auriculaire1.transform.Rotate(Vector3.left, Time.deltaTime * 10);
             degree -= Time.deltaTime * 10;
         }
-        if (degree > 30 && degree <= 75)
+        if (degree > 15 && degree <= 100)
         {
             Auriculaire2.transform.Rotate(Vector3.down, Time.deltaTime * 10);
+            if (degree < 20) Auriculaire2.transform.Rotate(Vector3.left, Time.deltaTime * 10);
             degree -= Time.deltaTime * 10;
         }
-        if (degree > 75 && degree <= 120)
+        if (degree > 100 && degree <= 160)
         {
             Auriculaire3.transform.Rotate(Vector3.down, Time.deltaTime * 10);
+            if (degree < 80) Auriculaire3.transform.Rotate(Vector3.left, Time.deltaTime * 10);
             degree -= Time.deltaTime * 10;
         }
-        if (degree > 120)
+        if (degree > 160)
         {
             Auriculaire4.transform.Rotate(Vector3.down, Time.deltaTime * 10);
+            if (degree < 125) Auriculaire4.transform.Rotate(Vector3.left, Time.deltaTime * 10);
             degree -= Time.deltaTime * 10;
         }
     }

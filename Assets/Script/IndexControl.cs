@@ -29,17 +29,18 @@ public class IndexControl : MonoBehaviour
 
     public void CloseFinger()
     {
-        if (degree < 55)
+        if (degree < 90)
         {
             Index1.transform.Rotate(Vector3.up, Time.deltaTime * 10);
+           if (degree < 15) Index1.transform.Rotate(Vector3.right, Time.deltaTime * 10);
             degree += Time.deltaTime * 10;
         }
-        if (degree >= 55 && degree < 110)
+        if (degree >= 90 && degree < 150)
         {
             Index2.transform.Rotate(Vector3.up, Time.deltaTime * 10);
             degree += Time.deltaTime * 10;
         }
-        if (degree >= 110 && degree < 165)
+        if (degree >= 150 && degree < 210)
         {
             Index3.transform.Rotate(Vector3.up, Time.deltaTime * 10);
             degree += Time.deltaTime * 10;
@@ -49,20 +50,22 @@ public class IndexControl : MonoBehaviour
 
     public void OpenFinger()
     {
-        if (degree > 0 && degree <= 55)
+        if (degree > 0 && degree <= 90)
         {
             Index1.transform.Rotate(Vector3.down, Time.deltaTime * 10);
+            if (degree < 15) Index1.transform.Rotate(Vector3.left, Time.deltaTime * 10);
             degree -= Time.deltaTime * 10;
         }
-        if (degree > 55 && degree <= 110)
+        if (degree > 90 && degree <= 150)
         {
             Index2.transform.Rotate(Vector3.down, Time.deltaTime * 10);
             degree -= Time.deltaTime * 10;
         }
-        if (degree > 110)
+        if (degree > 150)
         {
             Index3.transform.Rotate(Vector3.down, Time.deltaTime * 10);
             degree -= Time.deltaTime * 10;
         }
+
     }
 }

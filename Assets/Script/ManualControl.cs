@@ -61,4 +61,21 @@ public class ManualControl : MonoBehaviour {
         index.OpenFinger();
         thumb.OpenFinger();
     }
+
+    public void rotateWrist()
+    {
+        wrist.RightWrist();
+    }
+
+    public void upWrist()
+    {
+        wrist.UpWrist();
+    }
+
+    public void centerWrist()
+    {
+        wrist.LeftWrist();
+        wrist.DownWrist();
+    }
+
 }

@@ -7,6 +7,7 @@ public class RingControl : MonoBehaviour {
     GameObject RingFinger1;
     GameObject RingFinger2;
     GameObject RingFinger3;
+    GameObject RingFinger4;
     float degree;
 
 
@@ -17,6 +18,7 @@ public class RingControl : MonoBehaviour {
         RingFinger1 = GameObject.FindGameObjectWithTag("RingFinger1");
         RingFinger2 = GameObject.FindGameObjectWithTag("RingFinger2");
         RingFinger3 = GameObject.FindGameObjectWithTag("RingFinger3");
+        RingFinger4 = GameObject.FindGameObjectWithTag("RingFinger4");
 
     }
 
@@ -28,41 +30,57 @@ public class RingControl : MonoBehaviour {
 
     public void CloseFinger()
     {
-        if (degree < 55)
+        if (degree < 15)
         {
             RingFinger1.transform.Rotate(Vector3.up, Time.deltaTime * 10);
+            if (degree < 5) RingFinger1.transform.Rotate(Vector3.right, Time.deltaTime * 10);
             degree += Time.deltaTime * 10;
         }
-        if (degree >= 55 && degree < 110)
+        if (degree >= 15 && degree < 120)
         {
             RingFinger2.transform.Rotate(Vector3.up, Time.deltaTime * 10);
+            if (degree < 20) RingFinger2.transform.Rotate(Vector3.right, Time.deltaTime * 10);
             degree += Time.deltaTime * 10;
         }
-        if (degree >= 110 && degree < 165)
+        if (degree >= 120 && degree < 180)
         {
             RingFinger3.transform.Rotate(Vector3.up, Time.deltaTime * 10);
+            if (degree < 80) RingFinger3.transform.Rotate(Vector3.right, Time.deltaTime * 10);
             degree += Time.deltaTime * 10;
         }
-
+        if (degree >= 180 && degree < 240)
+        {
+            RingFinger4.transform.Rotate(Vector3.up, Time.deltaTime * 10);
+            if (degree < 125) RingFinger4.transform.Rotate(Vector3.right, Time.deltaTime * 10);
+            degree += Time.deltaTime * 10;
+        }
     }
 
     public void OpenFinger()
     {
-        if (degree > 0 && degree <= 55)
+        if (degree > 0 && degree <= 15)
         {
             RingFinger1.transform.Rotate(Vector3.down, Time.deltaTime * 10);
+            if (degree < 5) RingFinger1.transform.Rotate(Vector3.left, Time.deltaTime * 10);
             degree -= Time.deltaTime * 10;
         }
-        if (degree > 55 && degree <= 110)
+        if (degree > 15 && degree <= 120)
         {
             RingFinger2.transform.Rotate(Vector3.down, Time.deltaTime * 10);
+            if (degree < 20) RingFinger2.transform.Rotate(Vector3.left, Time.deltaTime * 10);
             degree -= Time.deltaTime * 10;
         }
-        if (degree > 110)
+        if (degree > 120 && degree <= 180)
         {
             RingFinger3.transform.Rotate(Vector3.down, Time.deltaTime * 10);
+            if (degree < 80) RingFinger3.transform.Rotate(Vector3.left, Time.deltaTime * 10);
             degree -= Time.deltaTime * 10;
         }
-
+        if (degree > 180)
+        {
+            RingFinger4.transform.Rotate(Vector3.down, Time.deltaTime * 10);
+            if (degree < 125) RingFinger4.transform.Rotate(Vector3.left, Time.deltaTime * 10);
+            degree -= Time.deltaTime * 10;
+        }
     }
 }
