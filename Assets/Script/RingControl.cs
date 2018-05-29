@@ -8,7 +8,7 @@ public class RingControl : MonoBehaviour {
     GameObject RingFinger2;
     GameObject RingFinger3;
     GameObject RingFinger4;
-    float degree;
+    public float degree { get; private set; }
 
 
     // Use this for initialization

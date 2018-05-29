@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using spnavwrapper;
@@ -12,6 +13,7 @@ public class ManualControl : MonoBehaviour {
     MiddleControl middleFinger;
     IndexControl index;
     ThumbControl thumb;
+    ArduinoConnector connector;
 
     private void Awake()
     {
@@ -23,8 +25,11 @@ public class ManualControl : MonoBehaviour {
     {
         SpaceNav.Instance.CloseDevice();
         StopCoroutine("DoWaitEvent");
+        // Reset position of robotic arm
+        byte[] buff = new byte[]{66};
+    	connector.WriteToArduino(buff, 0, 1);
+		connector.Close();
     }
-
 
     // Use this for initialization
     void Start () {
@@ -35,8 +40,11 @@ public class ManualControl : MonoBehaviour {
         middleFinger = GameObject.FindObjectOfType(typeof(MiddleControl)) as MiddleControl;
         index = GameObject.FindObjectOfType(typeof(IndexControl)) as IndexControl;
         thumb = GameObject.FindObjectOfType(typeof(ThumbControl)) as ThumbControl;
+
+        connector = new ArduinoConnector();
+		connector.Open();
 	}
-	
+
 	// Update is called once per frame
     void Update () {
         if (Input.GetKey(KeyCode.Z))
@@ -49,7 +57,7 @@ public class ManualControl : MonoBehaviour {
             wrist.RightWrist();
         if (Input.GetKey(KeyCode.DownArrow)){
             closeHand();
-        }    
+        }
         if (Input.GetKey(KeyCode.UpArrow)){
             openHand();
         }
@@ -108,7 +116,10 @@ public class ManualControl : MonoBehaviour {
             }
         })));
 
-
+        int angle = (int) ringFinger.degree;
+        byte[] buff = new byte[1];
+        buff[0] = (byte) angle;
+        Debug.Log(buff[0]);
     }
 
     public void closeHand()
@@ -156,5 +167,4 @@ public class ManualControl : MonoBehaviour {
     {
         Application.LoadLevel(Application.loadedLevel);
     }
-
 }
