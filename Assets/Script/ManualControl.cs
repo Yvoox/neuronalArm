@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using spnavwrapper;
 
 public class ManualControl : MonoBehaviour {
     GameObject arm;
@@ -12,8 +13,21 @@ public class ManualControl : MonoBehaviour {
     IndexControl index;
     ThumbControl thumb;
 
-	// Use this for initialization
-	void Start () {
+    private void Awake()
+    {
+        SpaceNav.Instance.Sensitivity = 0.05;
+        SpaceNav.Instance.Threshold = 5;
+    }
+
+    private void OnApplicationQuit()
+    {
+        SpaceNav.Instance.CloseDevice();
+        StopCoroutine("DoWaitEvent");
+    }
+
+
+    // Use this for initialization
+    void Start () {
         arm = GetComponent<GameObject>();
         wrist = GameObject.FindObjectOfType(typeof(WristControl)) as WristControl;
         auriculaire = GameObject.FindObjectOfType(typeof(AuriculaireControl)) as AuriculaireControl;
@@ -35,13 +49,66 @@ public class ManualControl : MonoBehaviour {
             wrist.RightWrist();
         if (Input.GetKey(KeyCode.DownArrow)){
             closeHand();
-        }
-            
+        }    
         if (Input.GetKey(KeyCode.UpArrow)){
             openHand();
         }
-            
-        
+
+        StartCoroutine(DoWaitEvent((ev => {
+            if (ev != null)
+            {
+                if (ev is SpaceNavMotionEvent)
+                {
+                    var e = (SpaceNavMotionEvent)ev;
+                    Debug.Log(e.Axis);
+                    switch (e.Axis)
+                    {
+                        case SpaceNavAxis.X:
+                            if (e.Direction == SpaceNavDirection.POSITIVE)
+                            {
+                                wrist.RightWrist();
+                            }
+                            else
+                            {
+                                wrist.LeftWrist();
+                            }
+                            break;
+                        case SpaceNavAxis.Y:
+                            break;
+                        case SpaceNavAxis.Z:
+                            break;
+                        case SpaceNavAxis.RX:
+                            if (e.Direction == SpaceNavDirection.POSITIVE)
+                            {
+                                closeHand();
+                            }
+                            else
+                            {
+                                openHand();
+                            }
+                            break;
+                        case SpaceNavAxis.RY:
+                            break;
+                        case SpaceNavAxis.RZ:
+                            if (e.Direction == SpaceNavDirection.POSITIVE)
+                            {
+                                wrist.UpWrist();
+                            }
+                            else
+                            {
+                                wrist.DownWrist();
+                            }
+                            break;
+                    }
+                }
+                else if (ev is SpaceNavButtonEvent)
+                {
+                    InitialPosition();
+                }
+            }
+        })));
+
+
     }
 
     public void closeHand()
@@ -76,6 +143,18 @@ public class ManualControl : MonoBehaviour {
     {
         wrist.LeftWrist();
         wrist.DownWrist();
+    }
+
+    IEnumerator DoWaitEvent(System.Action<SpaceNavEvent> callback)
+    {
+        var ev = SpaceNav.Instance.WaitEvent(10);
+        yield return null; // wait until next frame
+        if (ev != null) callback(ev);
+    }
+
+    public void InitialPosition()
+    {
+        Application.LoadLevel(Application.loadedLevel);
     }
 
 }

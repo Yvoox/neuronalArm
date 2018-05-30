@@ -11,6 +11,7 @@ public class ThumbControl : MonoBehaviour
     float degree;
 
 
+
     // Use this for initialization
     void Start()
     {

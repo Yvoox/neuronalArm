@@ -7,6 +7,7 @@ public class WristControl : MonoBehaviour {
     GameObject wrist;
     private double degree_rotate;
     private double degree_up;
+    public Quaternion startAngle { get; private set; }
 
 
 	// Use this for initialization
@@ -14,6 +15,7 @@ public class WristControl : MonoBehaviour {
         wrist = GameObject.FindGameObjectWithTag("Wrist");
         degree_rotate = 0;
         degree_up = 0;
+        startAngle = wrist.transform.rotation;
 	}
 	
 	// Update is called once per frame
@@ -55,6 +57,12 @@ public class WristControl : MonoBehaviour {
             degree_up += Time.deltaTime * 10;
         }
 
+
+    }
+
+    public void InitialPosition()
+    {
+        wrist.transform.rotation = startAngle;
     }
 
 }
