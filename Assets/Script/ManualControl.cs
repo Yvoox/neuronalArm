@@ -41,7 +41,10 @@ public class ManualControl : MonoBehaviour {
         index = GameObject.FindObjectOfType(typeof(IndexControl)) as IndexControl;
         thumb = GameObject.FindObjectOfType(typeof(ThumbControl)) as ThumbControl;
 
+        
+
         connector = new ArduinoConnector();
+        Debug.Log(connector.port);
 		connector.Open();
 	}
 
@@ -119,6 +122,7 @@ public class ManualControl : MonoBehaviour {
         int angle = (int) ringFinger.degree;
         byte[] buff = new byte[1];
         buff[0] = (byte) angle;
+        connector.WriteToArduino(buff,0,1);
         Debug.Log(buff[0]);
     }
 
