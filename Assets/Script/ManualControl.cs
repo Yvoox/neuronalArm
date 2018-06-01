@@ -15,6 +15,10 @@ public class ManualControl : MonoBehaviour {
     ThumbControl thumb;
     ArduinoConnector connector;
 
+    Dictionary<int,Finger> fingers;
+
+    public static float time;
+
     private void Awake()
     {
         SpaceNav.Instance.Sensitivity = 0.05;
@@ -34,6 +38,7 @@ public class ManualControl : MonoBehaviour {
     // Use this for initialization
     void Start () {
         arm = GetComponent<GameObject>();
+
         wrist = GameObject.FindObjectOfType(typeof(WristControl)) as WristControl;
         auriculaire = GameObject.FindObjectOfType(typeof(AuriculaireControl)) as AuriculaireControl;
         ringFinger = GameObject.FindObjectOfType(typeof(RingControl)) as RingControl;
@@ -41,7 +46,12 @@ public class ManualControl : MonoBehaviour {
         index = GameObject.FindObjectOfType(typeof(IndexControl)) as IndexControl;
         thumb = GameObject.FindObjectOfType(typeof(ThumbControl)) as ThumbControl;
 
-        
+        fingers = new Dictionary<int,Finger>();
+        fingers.Add(5,auriculaire);
+        fingers.Add(4,ringFinger);
+        fingers.Add(3,middleFinger);
+        fingers.Add(2,index);
+        fingers.Add(1,thumb);
 
         connector = new ArduinoConnector();
         Debug.Log(connector.port);
@@ -50,6 +60,8 @@ public class ManualControl : MonoBehaviour {
 
 	// Update is called once per frame
     void Update () {
+
+        time = Time.deltaTime * 50;
         if (Input.GetKey(KeyCode.Z))
             wrist.UpWrist();
         if (Input.GetKey(KeyCode.S))
@@ -59,11 +71,56 @@ public class ManualControl : MonoBehaviour {
         if (Input.GetKey(KeyCode.D))
             wrist.RightWrist();
         if (Input.GetKey(KeyCode.DownArrow)){
-            closeHand();
+            //closeHand();
+            foreach(var finger in fingers.Values){
+                finger.CloseFinger();
+            }
         }
         if (Input.GetKey(KeyCode.UpArrow)){
-            openHand();
+            //openHand();
+            foreach (var finger in fingers.Values)
+            {
+                finger.OpenFinger();
+            }
         }
+
+        if (Input.GetKey(KeyCode.Keypad1))
+        {
+            fingers.Clear();
+            fingers.Add(1,thumb);
+        }
+        if (Input.GetKey(KeyCode.Keypad2))
+        {
+            fingers.Clear();
+            fingers.Add(2,index);
+        }
+        if (Input.GetKey(KeyCode.Keypad3))
+        {
+            fingers.Clear();
+            fingers.Add(3,middleFinger);
+        }
+        if (Input.GetKey(KeyCode.Keypad4))
+        {
+            fingers.Clear();
+            fingers.Add(4,ringFinger);
+        }
+        if (Input.GetKey(KeyCode.Keypad5))
+        {
+            fingers.Clear();
+            fingers.Add(5,auriculaire);
+        }
+        if (Input.GetKey(KeyCode.Keypad6))
+        {
+            fingers.Clear();
+            fingers.Add(1,thumb);
+            fingers.Add(2,index);
+            fingers.Add(3,middleFinger);
+            fingers.Add(4,ringFinger);
+            fingers.Add(5,auriculaire);
+        }
+
+
+
 
         StartCoroutine(DoWaitEvent((ev => {
             if (ev != null)
@@ -119,11 +176,17 @@ public class ManualControl : MonoBehaviour {
             }
         })));
 
-        int angle = (int) ringFinger.degree;
-        byte[] buff = new byte[1];
-        buff[0] = (byte) angle;
-        connector.WriteToArduino(buff,0,1);
-        Debug.Log(buff[0]);
+        /*  int angle = (int) ringFinger.degree;
+          byte[] buff = new byte[1];
+          buff[0] = (byte) angle;
+          connector.WriteToArduino(buff,0,1);
+          Debug.Log(buff[0]);*/
+
+        foreach(var finger in fingers)
+        {
+            connector.MoveFinger(finger.Key, (int) finger.Value.degree);
+        }
+        
     }
 
     public void closeHand()
@@ -157,7 +220,6 @@ public class ManualControl : MonoBehaviour {
     public void centerWrist()
     {
         wrist.LeftWrist();
-        wrist.DownWrist();
     }
 
     IEnumerator DoWaitEvent(System.Action<SpaceNavEvent> callback)
@@ -172,3 +234,5 @@ public class ManualControl : MonoBehaviour {
         Application.LoadLevel(Application.loadedLevel);
     }
 }
+
+

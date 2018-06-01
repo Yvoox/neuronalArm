@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IndexControl : MonoBehaviour
+public class IndexControl : Finger
 {
 
     GameObject Index1;
     GameObject Index2;
     GameObject Index3;
-    float degree;
 
 
     // Use this for initialization
@@ -27,44 +26,44 @@ public class IndexControl : MonoBehaviour
 
     }
 
-    public void CloseFinger()
+    public override void CloseFinger()
     {
         if (degree < 90)
         {
-            Index1.transform.Rotate(Vector3.up, Time.deltaTime * 10);
-           if (degree < 15) Index1.transform.Rotate(Vector3.right, Time.deltaTime * 10);
-            degree += Time.deltaTime * 10;
+            Index1.transform.Rotate(Vector3.up, ManualControl.time);
+           if (degree < 15) Index1.transform.Rotate(Vector3.right, ManualControl.time);
+            degree += ManualControl.time;
         }
         if (degree >= 90 && degree < 150)
         {
-            Index2.transform.Rotate(Vector3.up, Time.deltaTime * 10);
-            degree += Time.deltaTime * 10;
+            Index2.transform.Rotate(Vector3.up, ManualControl.time);
+            degree += ManualControl.time;
         }
         if (degree >= 150 && degree < 210)
         {
-            Index3.transform.Rotate(Vector3.up, Time.deltaTime * 10);
-            degree += Time.deltaTime * 10;
+            Index3.transform.Rotate(Vector3.up, ManualControl.time);
+            degree += ManualControl.time;
         }
 
     }
 
-    public void OpenFinger()
+    public override void OpenFinger()
     {
         if (degree > 0 && degree <= 90)
         {
-            Index1.transform.Rotate(Vector3.down, Time.deltaTime * 10);
-            if (degree < 15) Index1.transform.Rotate(Vector3.left, Time.deltaTime * 10);
-            degree -= Time.deltaTime * 10;
+            Index1.transform.Rotate(Vector3.down, ManualControl.time);
+            if (degree < 15) Index1.transform.Rotate(Vector3.left, ManualControl.time);
+            degree -= ManualControl.time;
         }
         if (degree > 90 && degree <= 150)
         {
-            Index2.transform.Rotate(Vector3.down, Time.deltaTime * 10);
-            degree -= Time.deltaTime * 10;
+            Index2.transform.Rotate(Vector3.down, ManualControl.time);
+            degree -= ManualControl.time;
         }
         if (degree > 150)
         {
-            Index3.transform.Rotate(Vector3.down, Time.deltaTime * 10);
-            degree -= Time.deltaTime * 10;
+            Index3.transform.Rotate(Vector3.down, ManualControl.time);
+            degree -= ManualControl.time;
         }
 
     }

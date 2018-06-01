@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThumbControl : MonoBehaviour
+public class ThumbControl : Finger
 {
 
     GameObject Thumb1;
     GameObject Thumb2;
     GameObject Thumb3;
-    float degree;
 
 
 
@@ -28,44 +27,44 @@ public class ThumbControl : MonoBehaviour
 
     }
 
-    public void CloseFinger()
+    public override void CloseFinger()
     {
         if (degree < 15)
         {
-            Thumb1.transform.Rotate(Vector3.up, Time.deltaTime * 10);
-            Thumb1.transform.Rotate(Vector3.right, Time.deltaTime * 10);
-            degree += Time.deltaTime * 10;
+            Thumb1.transform.Rotate(Vector3.up, ManualControl.time);
+            Thumb1.transform.Rotate(Vector3.right, ManualControl.time);
+            degree += ManualControl.time;
         }
         if (degree >= 15 && degree < 110)
         {
-            Thumb2.transform.Rotate(Vector3.up, Time.deltaTime * 10);
-            degree += Time.deltaTime * 10;
+            Thumb2.transform.Rotate(Vector3.up, ManualControl.time);
+            degree += ManualControl.time;
         }
         if (degree >= 110 && degree < 190)
         {
-            Thumb3.transform.Rotate(Vector3.up, Time.deltaTime * 10);
-            degree += Time.deltaTime * 10;
+            Thumb3.transform.Rotate(Vector3.up, ManualControl.time);
+            degree += ManualControl.time;
         }
 
     }
 
-    public void OpenFinger()
+    public override void OpenFinger()
     {
         if (degree > 0 && degree <= 15)
         {
-            Thumb1.transform.Rotate(Vector3.down, Time.deltaTime * 10);
-            Thumb1.transform.Rotate(Vector3.left, Time.deltaTime * 10);
-            degree -= Time.deltaTime * 10;
+            Thumb1.transform.Rotate(Vector3.down, ManualControl.time);
+            Thumb1.transform.Rotate(Vector3.left, ManualControl.time);
+            degree -= ManualControl.time;
         }
         if (degree > 15 && degree <= 110)
         {
-            Thumb2.transform.Rotate(Vector3.down, Time.deltaTime * 10);
-            degree -= Time.deltaTime * 10;
+            Thumb2.transform.Rotate(Vector3.down, ManualControl.time);
+            degree -= ManualControl.time;
         }
         if (degree > 110)
         {
-            Thumb3.transform.Rotate(Vector3.down, Time.deltaTime * 10);
-            degree -= Time.deltaTime * 10;
+            Thumb3.transform.Rotate(Vector3.down, ManualControl.time);
+            degree -= ManualControl.time;
         }
     }
 

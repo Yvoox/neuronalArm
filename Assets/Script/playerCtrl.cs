@@ -37,7 +37,7 @@ public class playerCtrl : MonoBehaviour
         {
             /* Vector3 movement = new Vector3(cam.transform.forward.x, cam.transform.forward.y, cam.transform.forward.z);
              rb.AddForce(movement * speed);*/
-            controller.openHand();
+            controller.closeHand();
            
 
             Debug.Log("Push");
@@ -47,7 +47,7 @@ public class playerCtrl : MonoBehaviour
         {
             /* Vector3 movement = new Vector3(cam.transform.forward.x, cam.transform.forward.y, cam.transform.forward.z);
              rb.AddForce(movement * speed);*/
-            controller.closeHand();
+            controller.openHand();
             controller.centerWrist();
 
 
@@ -56,8 +56,7 @@ public class playerCtrl : MonoBehaviour
 
         if (es.MentalCommandGetCurrentAction() == EdkDll.IEE_MentalCommandAction_t.MC_ROTATE_RIGHT)
         {
-            /* Vector3 movement = new Vector3(cam.transform.forward.x, cam.transform.forward.y, cam.transform.forward.z);
-             rb.AddForce(movement * speed);*/
+
             controller.rotateWrist();
 
 

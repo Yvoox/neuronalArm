@@ -32,6 +32,26 @@ public class ArduinoConnector {
         stream.BaseStream.Flush();
     }
 
+    /*
+     * Fingers Binding :
+     * 1 : Thumb
+     * 2 : Index
+     * 3 : MiddleFinger
+     * 4 : RingFinger
+     * 5 : Auriculaire
+     */
+
+    public void MoveFinger(int fingerNumber, int degree)
+    {
+        byte[] buffer = new byte[3];
+        buffer[0] = (byte) fingerNumber;
+        buffer[1] = (byte) degree;
+        buffer[2] = 255;
+
+        stream.Write(buffer, 0, buffer.Length);
+        stream.BaseStream.Flush();
+    }
+
     public string ReadFromArduino(int timeout = 0)
     {
         stream.ReadTimeout = timeout;
