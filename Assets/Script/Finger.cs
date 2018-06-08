@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class Finger : MonoBehaviour {
 
     public float degree { get; protected set; }
+    public byte mask { get; protected set; }
 
     // Use this for initialization
     void Start () {

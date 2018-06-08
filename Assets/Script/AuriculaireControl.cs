@@ -14,6 +14,7 @@ public class AuriculaireControl : Finger {
     void Start()
     {
         degree = 0;
+        mask = 0x01;
         Auriculaire1 = GameObject.FindGameObjectWithTag("Auriculaire1");
         Auriculaire2 = GameObject.FindGameObjectWithTag("Auriculaire2");
         Auriculaire3 = GameObject.FindGameObjectWithTag("Auriculaire3");
@@ -29,54 +30,54 @@ public class AuriculaireControl : Finger {
 
     public override void CloseFinger(){
         if (degree < 15){
-            Auriculaire1.transform.Rotate(Vector3.up, ManualControl.time);
-            if (degree < 5)  Auriculaire1.transform.Rotate(Vector3.right, ManualControl.time);
-            degree += ManualControl.time;
+            Auriculaire1.transform.Rotate(Vector3.up, ManualControl.time/2);
+            if (degree < 5)  Auriculaire1.transform.Rotate(Vector3.right, ManualControl.time/2);
+            degree += ManualControl.time/2;
         }
         if (degree >= 15 && degree < 100) 
         {
-            Auriculaire2.transform.Rotate(Vector3.up, ManualControl.time);
-            if (degree < 20) Auriculaire2.transform.Rotate(Vector3.right, ManualControl.time);
-            degree += ManualControl.time;
+            Auriculaire2.transform.Rotate(Vector3.up, ManualControl.time/2);
+            if (degree < 20) Auriculaire2.transform.Rotate(Vector3.right, ManualControl.time/2);
+            degree += ManualControl.time/2;
         }
         if (degree >= 100 && degree < 160)
         {
-            Auriculaire3.transform.Rotate(Vector3.up, ManualControl.time);
-            if (degree < 80) Auriculaire3.transform.Rotate(Vector3.right, ManualControl.time);
-            degree += ManualControl.time;
+            Auriculaire3.transform.Rotate(Vector3.up, ManualControl.time/2);
+            if (degree < 80) Auriculaire3.transform.Rotate(Vector3.right, ManualControl.time/2);
+            degree += ManualControl.time/2;
         }
         if (degree >= 160 && degree < 220)
         {
-            Auriculaire4.transform.Rotate(Vector3.up, ManualControl.time);
-            if (degree < 125) Auriculaire4.transform.Rotate(Vector3.right, ManualControl.time);
-            degree += ManualControl.time;
+            Auriculaire4.transform.Rotate(Vector3.up, ManualControl.time/2);
+            if (degree < 125) Auriculaire4.transform.Rotate(Vector3.right, ManualControl.time/2);
+            degree += ManualControl.time/2;
         }
     }
 
     public override void OpenFinger(){
         if (degree >0 && degree <= 15)
         {
-            Auriculaire1.transform.Rotate(Vector3.down, ManualControl.time);
-            if (degree < 5) Auriculaire1.transform.Rotate(Vector3.left, ManualControl.time);
-            degree -= ManualControl.time;
+            Auriculaire1.transform.Rotate(Vector3.down, ManualControl.time/2);
+            if (degree < 5) Auriculaire1.transform.Rotate(Vector3.left, ManualControl.time/2);
+            degree -= ManualControl.time/2;
         }
         if (degree > 15 && degree <= 100)
         {
-            Auriculaire2.transform.Rotate(Vector3.down, ManualControl.time);
-            if (degree < 20) Auriculaire2.transform.Rotate(Vector3.left, ManualControl.time);
-            degree -= ManualControl.time;
+            Auriculaire2.transform.Rotate(Vector3.down, ManualControl.time/2);
+            if (degree < 20) Auriculaire2.transform.Rotate(Vector3.left, ManualControl.time/2);
+            degree -= ManualControl.time/2;
         }
         if (degree > 100 && degree <= 160)
         {
-            Auriculaire3.transform.Rotate(Vector3.down, ManualControl.time);
-            if (degree < 80) Auriculaire3.transform.Rotate(Vector3.left, ManualControl.time);
-            degree -= ManualControl.time;
+            Auriculaire3.transform.Rotate(Vector3.down, ManualControl.time/2);
+            if (degree < 80) Auriculaire3.transform.Rotate(Vector3.left, ManualControl.time/2);
+            degree -= ManualControl.time/2;
         }
         if (degree > 160)
         {
-            Auriculaire4.transform.Rotate(Vector3.down, ManualControl.time);
-            if (degree < 125) Auriculaire4.transform.Rotate(Vector3.left, ManualControl.time);
-            degree -= ManualControl.time;
+            Auriculaire4.transform.Rotate(Vector3.down, ManualControl.time/2);
+            if (degree < 125) Auriculaire4.transform.Rotate(Vector3.left, ManualControl.time/2);
+            degree -= ManualControl.time/2;
         }
     }
 }

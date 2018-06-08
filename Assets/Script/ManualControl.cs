@@ -15,7 +15,9 @@ public class ManualControl : MonoBehaviour {
     ThumbControl thumb;
     ArduinoConnector connector;
 
-    Dictionary<int,Finger> fingers;
+    int tempFingerDegree;
+
+    List<Finger> fingers;
 
     public static float time;
 
@@ -29,10 +31,30 @@ public class ManualControl : MonoBehaviour {
     {
         SpaceNav.Instance.CloseDevice();
         StopCoroutine("DoWaitEvent");
+        StopCoroutine("ArduinoEvent");
         // Reset position of robotic arm
-        byte[] buff = new byte[]{66};
-    	connector.WriteToArduino(buff, 0, 1);
-		connector.Close();
+        fingers.Clear();
+        fingers.Add(auriculaire);
+        fingers.Add(ringFinger);
+        fingers.Add(middleFinger);
+        fingers.Add(index);
+        fingers.Add(thumb);
+
+    /*    foreach(var finger in fingers)
+        {
+            connector.MoveFinger(finger.Key, 120);
+        }*/
+
+        byte fingersMask = 0;
+        foreach (var finger in fingers)
+        {
+            fingersMask |= finger.mask;
+            //connector.MoveFinger(finger.Key, (int)finger.Value.degree);
+        }
+
+        connector.MoveFinger(fingersMask, 120);
+        connector.Close();
+
     }
 
     // Use this for initialization
@@ -46,17 +68,23 @@ public class ManualControl : MonoBehaviour {
         index = GameObject.FindObjectOfType(typeof(IndexControl)) as IndexControl;
         thumb = GameObject.FindObjectOfType(typeof(ThumbControl)) as ThumbControl;
 
-        fingers = new Dictionary<int,Finger>();
-        fingers.Add(5,auriculaire);
-        fingers.Add(4,ringFinger);
-        fingers.Add(3,middleFinger);
-        fingers.Add(2,index);
-        fingers.Add(1,thumb);
+        fingers = new List<Finger>();
+        fingers.Add(auriculaire);
+        fingers.Add(ringFinger);
+        fingers.Add(middleFinger);
+        fingers.Add(index);
+        fingers.Add(thumb);
+
+        tempFingerDegree = 255;
 
         connector = new ArduinoConnector();
         Debug.Log(connector.port);
 		connector.Open();
-	}
+
+
+        connector.MoveFinger(31, 90);
+        StartCoroutine(ArduinoEvent());
+    }
 
 	// Update is called once per frame
     void Update () {
@@ -72,13 +100,13 @@ public class ManualControl : MonoBehaviour {
             wrist.RightWrist();
         if (Input.GetKey(KeyCode.DownArrow)){
             //closeHand();
-            foreach(var finger in fingers.Values){
+            foreach(var finger in fingers){
                 finger.CloseFinger();
             }
         }
         if (Input.GetKey(KeyCode.UpArrow)){
             //openHand();
-            foreach (var finger in fingers.Values)
+            foreach (var finger in fingers)
             {
                 finger.OpenFinger();
             }
@@ -87,36 +115,36 @@ public class ManualControl : MonoBehaviour {
         if (Input.GetKey(KeyCode.Keypad1))
         {
             fingers.Clear();
-            fingers.Add(1,thumb);
+            fingers.Add(thumb);
         }
         if (Input.GetKey(KeyCode.Keypad2))
         {
             fingers.Clear();
-            fingers.Add(2,index);
+            fingers.Add(index);
         }
         if (Input.GetKey(KeyCode.Keypad3))
         {
             fingers.Clear();
-            fingers.Add(3,middleFinger);
+            fingers.Add(middleFinger);
         }
         if (Input.GetKey(KeyCode.Keypad4))
         {
             fingers.Clear();
-            fingers.Add(4,ringFinger);
+            fingers.Add(ringFinger);
         }
         if (Input.GetKey(KeyCode.Keypad5))
         {
             fingers.Clear();
-            fingers.Add(5,auriculaire);
+            fingers.Add(auriculaire);
         }
         if (Input.GetKey(KeyCode.Keypad6))
         {
             fingers.Clear();
-            fingers.Add(1,thumb);
-            fingers.Add(2,index);
-            fingers.Add(3,middleFinger);
-            fingers.Add(4,ringFinger);
-            fingers.Add(5,auriculaire);
+            fingers.Add(thumb);
+            fingers.Add(index);
+            fingers.Add(middleFinger);
+            fingers.Add(ringFinger);
+            fingers.Add(auriculaire);
         }
 
 
@@ -182,11 +210,9 @@ public class ManualControl : MonoBehaviour {
           connector.WriteToArduino(buff,0,1);
           Debug.Log(buff[0]);*/
 
-        foreach(var finger in fingers)
-        {
-            connector.MoveFinger(finger.Key, (int) finger.Value.degree);
-        }
-        
+
+
+
     }
 
     public void closeHand()
@@ -227,6 +253,32 @@ public class ManualControl : MonoBehaviour {
         var ev = SpaceNav.Instance.WaitEvent(10);
         yield return null; // wait until next frame
         if (ev != null) callback(ev);
+    }
+
+    IEnumerator ArduinoEvent()
+    {
+        while (true)
+        {
+            byte fingersMask = 0;
+            foreach (var finger in fingers)
+            {
+                fingersMask |= finger.mask;
+                //connector.MoveFinger(finger.Key, (int)finger.Value.degree);
+            }
+
+
+            //  Debug.Log(fingersMask);
+            //  Debug.Log((int)fingers[0].degree);
+            if ((int)fingers[0].degree != tempFingerDegree)
+            {
+                connector.MoveFinger(fingersMask, (int)fingers[0].degree);
+            }
+
+            tempFingerDegree = (int)fingers[0].degree;
+
+            yield return new WaitForSeconds(0.2f);
+            // wait until next frame
+        }
     }
 
     public void InitialPosition()
